@@ -21,7 +21,7 @@ public class IDS {
 
 
 public static void main(String[] args) {
-    frontier.push(busRoutesTree.root);
+    frontier.push(BusRoutesTree.root);
     TNode.dls(root, level, limit);
     for (int level = 0; level <= limit; level++){
 

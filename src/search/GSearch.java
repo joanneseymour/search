@@ -54,7 +54,7 @@ public class GSearch {
         solution.add(goal);
         if (gNodeBeingChecked != initialState) {
             for (int j = 0; j < explored.size(); j++) {
-                // for all parents of nodeBeingChecked:
+                // for all parents of gNodeBeingChecked:
                 for (int i = 0; i < gNodeBeingChecked.parents.size(); i++) {
                     // if the explored set contains one of the parents,
                     if (explored.contains(gNodeBeingChecked.parents.get(i))) {
@@ -66,10 +66,10 @@ public class GSearch {
                         break;
                         // add it to the solution list at the beginning.
                     } // if parent is in explored set
-                } // for all parents of nodeBeingChecked
+                } // for all parents of gNodeBeingChecked
             }
 
-        } // if nodeBeingChecked is not home
+        } // if gNodeBeingChecked is not home
         System.out.print("Solution is ");
         for (int i = 0; i < solution.size(); i++) {
             System.out.print(i + ". " + solution.get(i).place + " ");
@@ -78,25 +78,33 @@ public class GSearch {
         return solution;
     } // calculateSolution
 
-    public static void expandToFrontier(GNode nodeBeingChecked, ArrayList<GNode> children) {
+    public static ArrayList<GNode> expandToFrontier(GNode gNodeBeingChecked, ArrayList<GNode> children) {
 		// expand chosen node, add resulting children to fifofrontier only if not in
 		// fifofrontier or explored set
-    	
+    	System.out.println("In expandToFrontier. gNodeBeingChecked is " + gNodeBeingChecked.place);
 		for (int i = 0; i < children.size(); i++) {
             child = children.get(i);
-			if (!fifoFrontier.contains(child)
-					&& !explored.contains(child)) {
+			if (!fifoFrontier.contains(child)){
+					if (!explored.contains(child)) {
                         if (GSearch.isGoal(child)) {
                             System.out.println("Goal found!");
                             calculateSolution(child, explored);
                             break;
                         }
+        				fifoFrontier.add(gNodeBeingChecked.children.get(i));
                     } else {
-                        System.out.println("Ignoring " + child.place + " as it's already in fifoFrontier / explored\n");
-                    } // if child not in explored or frontier
-				fifoFrontier.add(gNodeBeingChecked.children.get(0));
+                        System.out.println("Ignoring " + child.place + " as it's already in explored\n");
+                    } // if child not in explored
+				} else {
+                    System.out.println("Ignoring " + child.place + " as it's already in frontier\n");
+				}
+
 			} // for all children of gNodeBeingChecked
-            displayFrontierExplored(fifoFrontier, explored);	
+		explored.add(gNodeBeingChecked);
+            displayFrontierExplored(fifoFrontier, explored);
+        	System.out.println("At the end of expandToFrontier. gNodeBeingChecked is " + gNodeBeingChecked.place);
+        	return fifoFrontier;
+            //expandToFrontier()
 		}	
 
     public static void displayEdgeLists(ArrayList<Edge> edgeList) {
@@ -141,7 +149,7 @@ public class GSearch {
 				System.out.println("...Not goal. Adding " + gNodeBeingChecked.place + " to explored set");
 				explored.add(gNodeBeingChecked);
 				expandToFrontier(gNodeBeingChecked, (gNodeBeingChecked.children));
-			} else { // else the nodeBeingChecked is the goal
+			} else { // else the gNodeBeingChecked is the goal
 				System.out.println("Goal found!");
 				calculateSolution(gNodeBeingChecked, explored);
 			}

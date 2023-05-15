@@ -1,9 +1,6 @@
 package search;
 import java.util.ArrayList;
 import java.util.Collections;
-import search.GNode;
-import search.GSearch;
-import search.Edge;
 
 // This does a graphSearch, then it backs up from the goal, calculating the lowest cost route from each parent to the nodeBeingChecked. Cost is measured by time in minutes
 // However I want it to choose the lowest cost path from the beginning, without backing up. In that case you'll need to add in distance from goal.
@@ -33,7 +30,6 @@ public class GraphSearchWeights {
 	static GNode bestParent;
 	static int weight;
 
-	
 
 	public static void getBestParent(ArrayList<GNode> parentsToCheck) {
 		GNode thisParent = null;
