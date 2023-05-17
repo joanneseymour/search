@@ -6,10 +6,10 @@ public class GSearch {
     static ArrayList<GNode> fifoFrontier = new ArrayList<GNode>();
     static ArrayList<GNode> explored = new ArrayList<GNode>();
     static ArrayList<GNode> solution = new ArrayList<GNode>();
-    ArrayList<GNode> children = new ArrayList<GNode>();
+    static ArrayList<GNode> children = new ArrayList<GNode>();
     static GNode child;
     static BusRoutesGraph busRoutesGraph = new BusRoutesGraph();
-    static GNode initialState = busRoutesGraph.home;
+    static GNode initialState = BusRoutesGraph.home;
     static GNode goal; // goal actually isn't used at all - check the isGoal method
     int pathCost;
 
