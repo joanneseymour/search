@@ -10,7 +10,7 @@ public class GSearch {
     static GNode child;
     static BusRoutesGraph busRoutesGraph = new BusRoutesGraph();
     static GNode initialState = BusRoutesGraph.home;
-    static GNode goal; // goal actually isn't used at all - check the isGoal method
+    static GNode goal = BusRoutesGraph.work; // goal actually isn't used in isGoal method
     int pathCost;
 
     static ArrayList<Edge> bestEdges = new ArrayList<Edge>();
@@ -64,7 +64,7 @@ public class GSearch {
                     if (explored.contains(gNodeBeingChecked.parents.get(i))) {
                         System.out
                                 .println(gNodeBeingChecked.place + "'s parent, " + gNodeBeingChecked.parents.get(i).place
-                                        + ", is in the explored set. Adding to solution");
+                                        + ", is in the explored set. Adding to solution. [calculateSolution]");
                         solution.add(0, gNodeBeingChecked.parents.get(i));
                         gNodeBeingChecked = solution.get(0);
                         break;
@@ -96,22 +96,26 @@ public class GSearch {
 			if (!fifoFrontier.contains(child)){
 					if (!explored.contains(child)) {
                         if (GSearch.isGoal(child)) {
-                            System.out.println("Goal found!");
+                            System.out.println("Goal found! Adding to explored [expandToFrontier]");
+                            explored.add(child);
+                            displayFrontierExplored(gNodeBeingChecked, fifoFrontier, explored);
                             calculateSolution(child, explored);
+                            System.out.println("Out of calculateSolution, back in expandToFrontier. Should not go back to bfs after this");
                             break;
+                            
+                            // SHOULD NOT GO BACK TO BFS AFTER THIS!
                         }
         				fifoFrontier.add(child);
                     } else {
-                        System.out.println("Ignoring " + child.place + " as it's already in explored");
+                        System.out.println("Ignoring " + child.place + " as it's already in explored [expandToFrontier]");
                     } // if child not in explored
 				} else {
-                    System.out.println("Ignoring " + child.place + " as it's already in frontier");
+                    System.out.println("Ignoring " + child.place + " as it's already in frontier [expandToFrontier]");
 				}
 
 			} // for all children of gNodeBeingChecked
 		//explored.add(gNodeBeingChecked);
             displayFrontierExplored(gNodeBeingChecked, fifoFrontier, explored);
-        	System.out.println("At the end of expandToFrontier. gNodeBeingChecked is " + gNodeBeingChecked.place);
         	return fifoFrontier;
             //expandToFrontier()
 		}	
