@@ -13,45 +13,8 @@ package search;
 //     static int depth;
 //     static TNode tNodeBeingChecked;
 
-//     // public static Boolean isGoal(TNode tNodeBeingChecked) {
-//     //     if ((tNodeBeingChecked.place.length() > 3) && (tNodeBeingChecked.place.substring(0, 4) == "work")) {
-//     //         return true;
-//     //     } else {
-//     //         return false;
-//     //     }
-//     // }
 
-//     // public static void displayExploredFrontier(ArrayList<TNode> explored, Stack<TNode> frontier) {
-//     //     if (frontier.size() > 0) {
-//     //         System.out.print("Frontier: ");
-//     //         for (int f = 0; f < frontier.size(); f++) {
-//     //             System.out.print(frontier.get(f).place + "(" + frontier.get(f).id + "). ");
-//     //         }
-//     //         System.out.println("");
-//     //     } else {
-//     //         System.out.println("Frontier is empty");
-//     //     }
 
-//     //     if (explored.size() > 0) {
-//     //         System.out.print("Explored: ");
-//     //         for (int e = 0; e < explored.size(); e++) {
-//     //             System.out.print(explored.get(e).place + "(" + explored.get(e).id + "). ");
-//     //         }
-//     //         System.out.println("\n");
-//     //     } else {
-//     //         System.out.println("Explored is empty");
-//     //     }
-//     // }
-
-//     // public static void showSolution(TNode tNodeBeingChecked, ArrayList<TNode> explored) {
-//     //     System.out.println("Goal found!");
-//     //     explored.add(tNodeBeingChecked);
-//     //     System.out.print("Solution: ");
-//     //     for (int e = 0; e < explored.size(); e++) {
-//     //         System.out.print(explored.get(e).place + "(" + explored.get(e).id + "). ");
-//     //     }
-//     //     System.out.println("\n");
-//     // }
 
 //     // public static void expandAdjToFrontier(TNode node) {
 //     //     System.out.println("\nexpandAdjToFrontier:");

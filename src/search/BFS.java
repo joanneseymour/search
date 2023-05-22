@@ -1,4 +1,5 @@
 package search;
+
 import java.util.ArrayList;
 
 public class BFS {
@@ -8,30 +9,30 @@ public class BFS {
     static ArrayList<GNode> solution = new ArrayList<GNode>();
     static GNode child;
     static ArrayList<GNode> children = GSearch.children;
-
     static GNode gNodeBeingChecked = BusRoutesGraph.home;
 
     public static void main(String[] args) {
-    	BusRoutesGraph.buildGraph();
+        BusRoutesGraph.buildGraph();
         fifoFrontier.add(gNodeBeingChecked);
         if (GSearch.isGoal(gNodeBeingChecked)) {
             System.out.println("Goal reached! Solution:");
         }
-            gNodeBeingChecked = fifoFrontier.get(0);
-            while ((fifoFrontier.size() > 0) && (!solution.contains(goal))) {
-                System.out.println("Removing " + fifoFrontier.get(0).place + " from fifoFrontier and adding it to explored [BFS while]");
-                gNodeBeingChecked = fifoFrontier.remove(0);
-                children = gNodeBeingChecked.children;
-                explored.add(gNodeBeingChecked);
+        gNodeBeingChecked = fifoFrontier.get(0);
+        while ((fifoFrontier.size() > 0) && (!solution.contains(goal))) {
+            System.out.println("Removing " + fifoFrontier.get(0).place
+                    + " from fifoFrontier and adding it to explored [BFS while]");
+            gNodeBeingChecked = fifoFrontier.remove(0);
+            children = gNodeBeingChecked.children;
+            explored.add(gNodeBeingChecked);
+            GSearch.displayFrontierExplored(gNodeBeingChecked, fifoFrontier, explored);
+            System.out.println(gNodeBeingChecked.place + " has " + children.size()
+                    + " children. Adding all its children to fifoFrontier. [BFS while]");
+            fifoFrontier = GSearch.expandToFrontier(gNodeBeingChecked, children);
+            if (!explored.contains(goal)) {
                 GSearch.displayFrontierExplored(gNodeBeingChecked, fifoFrontier, explored);
-                System.out.println(gNodeBeingChecked.place + " has " + children.size()
-                        + " children. Adding all its children to fifoFrontier. [BFS while]");
-                fifoFrontier = GSearch.expandToFrontier(gNodeBeingChecked, children);
-                if (!explored.contains(goal)) {
-                    GSearch.displayFrontierExplored(gNodeBeingChecked, fifoFrontier, explored);
-                } else {
-                	fifoFrontier.clear();
-                }                         
+            } else {
+                fifoFrontier.clear();
             }
+        }
     }
 }
