@@ -23,7 +23,7 @@ public class TNode {
     static Stack<TNode> adjNodes;
     static TNode adjNode;
     static ArrayList<TNode> explored = new ArrayList<TNode>();
-    static TNode root = BusRoutesTree.root;
+    static TNode home = BusRoutesTree.home;
 
     int depth;
     static TNode tNodeBeingChecked;

@@ -83,8 +83,7 @@ public class GSearch {
     } // calculateSolution
 
     public static ArrayList<GNode> expandToFrontier(GNode gNodeBeingChecked, ArrayList<GNode> children) {
-		// expand chosen node, add resulting children to fifofrontier only if not in
-		// fifofrontier or explored set
+		// expand chosen node, add resulting children to fifofrontier only if not in fifofrontier or explored set
     	System.out.println("In expandToFrontier. gNodeBeingChecked is " + gNodeBeingChecked.place);
 		for (int i = 0; i < children.size(); i++) {
             child = children.get(i);
@@ -169,8 +168,8 @@ public class GSearch {
 		} // while fifoFrontier > 0
 	} // reach goal
     
-   public static void main(String[] args) {
-	   reachGoal();
-   }
+//   public static void main(String[] args) {
+//	   reachGoal();
+//   }
 
 }
