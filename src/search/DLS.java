@@ -1,80 +1,38 @@
 package search;
-// import java.util.ArrayList;
-// import java.util.Stack;
+import java.util.ArrayList;
+import java.util.Stack;
 
-// public class DLS {
-//     static busRoutesTree busRoutesTree = new busRoutesTree();
-//     static Stack<TNode> frontier = new Stack<TNode>();
-//     static Stack<TNode> adjNodes;
-//     static TNode adjNode;
-//     static ArrayList<TNode> explored = new ArrayList<TNode>();
-//     static TNode root = busRoutesTree.root;
-//     static int limit = 3;
-//     static int depth;
-//     static TNode tNodeBeingChecked;
-
+ public class DLS {
+   static Stack<TNode> lifoFrontier = TSearch.lifoFrontier;
+   static Stack<TNode> adjNodes = TSearch.adjNodes;
+   static TNode adjNode = TSearch.adjNode;
+   static ArrayList<TNode> explored = TSearch.explored;
+   static int limit = 3;
+   static int level = 0;
+   static int depth;
+   static TNode tNodeBeingChecked = TSearch.tNodeBeingChecked;
 
 
+ public static void main(String[] args) {
+    System.out.println("\nIn dls. Level: " + level + ", limit: " + limit);
 
-//     // public static void expandAdjToFrontier(TNode node) {
-//     //     System.out.println("\nexpandAdjToFrontier:");
-//     //     System.out.println("Currently checking " + node.place + node.id);
-//     //     adjNodes = TNode.getAdjNodes(node);
-//     //     System.out.println(node.place + " has " + adjNodes.size() + " adjNodes");
-//     //     for (int j = 0; j < adjNodes.size(); j++) {
-//     //         adjNode = adjNodes.get(j);
-//     //         if (!frontier.contains(adjNode)) {
-//     //             frontier.add(adjNode);
-//     //         } else {
-//     //             System.out.println("Frontier already contains " + adjNode.place + adjNode.id);
-//     //         }
-//     //     }
-//     //     displayExploredFrontier(explored, frontier);
-//     //     checkAdjInFrontier();
-//     // }
+    TSearch.displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
+//    tNodeBeingChecked = lifoFrontier.pop();
+    System.out.println("Checking " + tNodeBeingChecked.place + tNodeBeingChecked.id);
 
-//     // // check if they are a goal. return solution. If not, add each one to explored
-//     // // and add its childen to frontier.
-//     // public static void checkAdjInFrontier() {
-//     //     System.out.println("checkAdjInFrontier:");
-//     //     System.out.println("Checking " + adjNode.place + adjNode.id + ", depth " + adjNode.depth);
-//     //     if (adjNode.depth <= limit) {
-//     //         if (!explored.contains(adjNode)) {
-//     //             if (isGoal(adjNode)) {
-//     //                 showSolution(adjNode, explored);
-//     //             } else {
-//     //                 explored.add(adjNode);
-//     //                 System.out.println(
-//     //                         "adjNode " + adjNode.place + adjNode.id + " is not the goal. Going to expandAdjToFrontier");
-//     //                 expandAdjToFrontier(adjNode);
-//     //             } // if isGoal
-//     //         } else {
-//     //             System.out.println("Explored already contains " + adjNode.place + adjNode.id);
-//     //         } // if !explored.contains
-//     //     } else {
-//     //         System.out.println(adjNode.place + adjNode.id + "is beyond the searchable limit");
-//     //     }
-//     // }
+    if (!TSearch.isGoal(tNodeBeingChecked)) {
+        if (!explored.contains(tNodeBeingChecked)) {
+            explored.add(tNodeBeingChecked);
+            System.out.println("TNodeBeingChecked is " + tNodeBeingChecked.place + tNodeBeingChecked.id
+                    + ". Checking its adjNodes");
+            TSearch.adjsToFrontierLimited(tNodeBeingChecked, level, limit);
+        } else {
+            System.out.println("Explored already contains " + tNodeBeingChecked.place + tNodeBeingChecked.id);
+        }
+    } else {
+        TSearch.showSolution();
+    }
+    System.out.println("Not goal");
+} // main
 
-
-//     // public static void main(String[] args) {
-//     //     frontier.push(busRoutesTree.root);
-//     //     displayExploredFrontier(explored, frontier);
-//     //     tNodeBeingChecked = frontier.pop();
-
-//     //     if (!isGoal(tNodeBeingChecked)) {
-//     //         if (!explored.contains(tNodeBeingChecked)) {
-//     //             explored.add(tNodeBeingChecked);
-//     //             System.out.println("TNodeBeingChecked is " + tNodeBeingChecked.place + tNodeBeingChecked.id
-//     //                     + ". Checking its adjNodes");
-//     //             expandAdjToFrontier(tNodeBeingChecked);
-//     //         } else {
-//     //             System.out.println("Explored already contains " + tNodeBeingChecked.place + tNodeBeingChecked.id);
-//     //         }
-//     //     } else {
-//     //         showSolution(tNodeBeingChecked, explored);
-//     //     }
-
-//     // } // main
-
-// }
+ }

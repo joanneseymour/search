@@ -12,7 +12,7 @@ public class TSearch {
     static BusRoutesTree BusRoutesTree = new BusRoutesTree();
     static TNode initialState = search.BusRoutesTree.home;
     static Stack<TNode> adjNodes = new Stack<TNode>();
-    static TNode tNodeBeingChecked = search.BusRoutesTree.home;
+    static TNode tNodeBeingChecked = initialState;
     static TNode adjNode;
 
     public static Boolean isGoal(TNode tNodeBeingChecked) {
@@ -75,25 +75,25 @@ public class TSearch {
     // the following code is moved over from dls.java, then TNode.java:
 
 
-    public static void expandAdjToFrontier(TNode node, int level, int limit) {
+    public static void adjsToFrontierLimited(TNode node, int level, int limit) {
         System.out.println("\nIn expandAdjToFrontier. level: " + level + ", limit: " + limit);
         System.out.println("Currently checking " + node.place + node.id);
         adjNodes = TNode.getAdjNodes(node);
         System.out.println(node.place + " has " + adjNodes.size() + " adjNodes");
         for (int j = 0; j < adjNodes.size(); j++) {
             adjNode = adjNodes.get(j);
-            if (!frontier.contains(adjNode)) {
-                frontier.add(adjNode);
+            if (!lifoFrontier.contains(adjNode)) {
+                lifoFrontier.add(adjNode);
             } else {
-                System.out.println("Frontier already contains " + adjNode.place + adjNode.id);
+                System.out.println("lifoFrontier already contains " + adjNode.place + adjNode.id);
             }
         }
-        displayExploredFrontier(explored, frontier);
+        displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
         checkAdjInFrontier(level, limit);
     }
 
     // check if they are a goal. return solution. If not, add each one to explored
-    // and add its childen to frontier.
+    // and add its children to lifoFrontier.
     public static void checkAdjInFrontier(int level, int limit) {
         System.out.println("checkAdjInFrontier. Level: " + level + ", limit: " + limit);
         System.out.println("Checking " + adjNode.place + adjNode.id + ", depth " + adjNode.depth);
@@ -101,12 +101,13 @@ public class TSearch {
             System.out.println(adjNode.place + adjNode.id + " depth: " + adjNode.depth + " is <= level " + level);
             if (!explored.contains(adjNode)) {
                 if (isGoal(adjNode)) {
-                    showSolution(adjNode, explored);
+                    showSolution();
                 } else {
                     explored.add(adjNode);
                     System.out.println(
                             "adjNode " + adjNode.place + adjNode.id + " is not the goal. Going to expandAdjToFrontier");
-                    expandAdjToFrontier(adjNode, level, limit);
+                    adjsToFrontierLimited(adjNode, level, limit);
+                    
                 } // if isGoal
             } else {
                 System.out.println("Explored already contains " + adjNode.place + adjNode.id);

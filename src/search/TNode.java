@@ -37,7 +37,7 @@ public class TNode {
         return tNodeBeingChecked.rSib;
     }
 
-    // this gets the node's children, grandchildren etc, or siblings if no child
+    // this gets the node's children, grand children etc, or siblings if no child
     public static Stack<TNode> getAdjNodes(TNode tNodeBeingChecked){
         TNode adjNode;
         adjNodes.clear();
@@ -66,32 +66,6 @@ public class TNode {
     }
 
    
-
-    // dls method used to be the main method of dls.java:
-    public static Boolean dls(TNode tNode, int level, int limit) {
-        System.out.println("\nIn dls. Level: " + level + ", limit: " + limit);
-        // frontier.push(busRoutesTree.root);
-        displayExploredFrontier(explored, frontier);
-        tNodeBeingChecked = frontier.pop();
-        System.out.println("Checking " + tNodeBeingChecked.place + tNodeBeingChecked.id);
-
-        if (!isGoal(tNodeBeingChecked)) {
-            if (!explored.contains(tNodeBeingChecked)) {
-                explored.add(tNodeBeingChecked);
-                System.out.println("TNodeBeingChecked is " + tNodeBeingChecked.place + tNodeBeingChecked.id
-                        + ". Checking its adjNodes");
-                expandAdjToFrontier(tNodeBeingChecked, level, limit);
-            } else {
-                System.out.println("Explored already contains " + tNodeBeingChecked.place + tNodeBeingChecked.id);
-            }
-        } else {
-            showSolution(tNodeBeingChecked, explored);
-            return true;
-        }
-        System.out.println("dls. Not goal, exiting dls and going back to ids");
-        return false;
-
-    } // dls
 
 
     
