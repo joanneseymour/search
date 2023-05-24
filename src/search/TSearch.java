@@ -73,49 +73,5 @@ public class TSearch {
     }
     
     // the following code is moved over from dls.java, then TNode.java:
-
-
-    public static void adjsToFrontierLimited(TNode node, int level, int limit) {
-        System.out.println("\nIn expandAdjToFrontier. level: " + level + ", limit: " + limit);
-        System.out.println("Currently checking " + node.place + node.id);
-        adjNodes = TNode.getAdjNodes(node);
-        System.out.println(node.place + " has " + adjNodes.size() + " adjNodes");
-        for (int j = 0; j < adjNodes.size(); j++) {
-            adjNode = adjNodes.get(j);
-            if (!lifoFrontier.contains(adjNode)) {
-                lifoFrontier.add(adjNode);
-            } else {
-                System.out.println("lifoFrontier already contains " + adjNode.place + adjNode.id);
-            }
-        }
-        displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
-        checkAdjInFrontier(level, limit);
-    }
-
-    // check if they are a goal. return solution. If not, add each one to explored
-    // and add its children to lifoFrontier.
-    public static void checkAdjInFrontier(int level, int limit) {
-        System.out.println("checkAdjInFrontier. Level: " + level + ", limit: " + limit);
-        System.out.println("Checking " + adjNode.place + adjNode.id + ", depth " + adjNode.depth);
-        if (adjNode.depth <= level) {
-            System.out.println(adjNode.place + adjNode.id + " depth: " + adjNode.depth + " is <= level " + level);
-            if (!explored.contains(adjNode)) {
-                if (isGoal(adjNode)) {
-                    showSolution();
-                } else {
-                    explored.add(adjNode);
-                    System.out.println(
-                            "adjNode " + adjNode.place + adjNode.id + " is not the goal. Going to expandAdjToFrontier");
-                    adjsToFrontierLimited(adjNode, level, limit);
-                    
-                } // if isGoal
-            } else {
-                System.out.println("Explored already contains " + adjNode.place + adjNode.id);
-            } // if !explored.contains
-        } else {
-            //System.out.println("Beyond level");
-            System.out.println(adjNode.place + adjNode.id + "'s depth, " + adjNode.depth + ", is beyond the current search level of " + level);
-        }
-    }
     
 }
