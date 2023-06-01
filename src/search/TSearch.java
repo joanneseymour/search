@@ -47,7 +47,6 @@ public class TSearch {
         } else {
             System.out.print("Explored is empty");
         }
-        System.out.println("\n");
     }
 
     public static void showSolution() {
