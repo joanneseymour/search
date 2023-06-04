@@ -18,7 +18,28 @@ public class IDS {
     static TNode root = TNode.root;
     static Stack<TNode> frontier = new Stack<TNode>();
 
-
+    // MAYBE USE THIS ONE IN IDS:
+    
+//  public static void adjsToFrontierI(TNode tNodeBeingChecked, int levelBeingChecked, int limit) {
+//      System.out.println("\nIn adjsToFrontierDLS. levelBeingChecked: " + levelBeingChecked + ", limit: " + limit);
+//      System.out.println("Currently checking " + tNodeBeingChecked.place + tNodeBeingChecked.id + " [adjsToFrontierDLS]");
+//      adjNodes = TNode.getAdjNodes(tNodeBeingChecked);
+//      System.out.println(tNodeBeingChecked.place + " has " + adjNodes.size() + " adjNodes" + " [adjsToFrontierDLS]");
+//      for (int j = 0; j < adjNodes.size(); j++) {
+//   	   System.out.println("Changing tNodeBeingChecked to " + adjNodes.get(j).place + adjNodes.get(j).id + " [adjsToFrontierDLS]");
+//          tNodeBeingChecked = adjNodes.get(j);
+//          if (!lifoFrontier.contains(tNodeBeingChecked)) {
+//       	   System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " is not in frontier. Adding it to frontier [adjsToFrontierDLS]");
+//              lifoFrontier.add(tNodeBeingChecked);
+//          } else {
+//              System.out.println("lifoFrontier already contains " + tNodeBeingChecked.place + tNodeBeingChecked.id + " [adjsToFrontierDLS]");
+//          }
+//      }
+//      TSearch.displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
+//      System.out.println("[adjsToFrontierDLS]\n");
+//      checkAdjInFrontier(levelBeingChecked, limit);
+//  }
+  
 
 public static void main(String[] args) {
     frontier.push(BusRoutesTree.root);

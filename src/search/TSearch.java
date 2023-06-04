@@ -70,7 +70,5 @@ public class TSearch {
             }
         }
     }
-    
-    // the following code is moved over from dls.java, then TNode.java:
-    
+      
 }
