@@ -10,9 +10,8 @@ public class TSearch {
     static ArrayList<TNode> children = new ArrayList<TNode>();
     static TNode child;
     static BusRoutesTree BusRoutesTree = new BusRoutesTree();
-    static TNode initialState = search.BusRoutesTree.home;
     static Stack<TNode> adjNodes = new Stack<TNode>();
-    static TNode tNodeBeingChecked = initialState;
+    static TNode tNodeBeingChecked = search.BusRoutesTree.home;
     static TNode adjNode;
 
     public static Boolean isGoal(TNode tNodeBeingChecked) {

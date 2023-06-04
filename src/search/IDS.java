@@ -1,61 +1,68 @@
 package search;
-// which class should the frontier belong to? Many search algorithms need it, so it can't just belong to ids or to TNode. Maybe I should make a class called LIFO frontier and another one called FIFO frontier? Should I put them in a new class called search>? What about the explored set?
-// ids and dfs etc are just different searches. Maybe they should all be in a class called uninformed search.
-// but maybe they should all be in a package. What is a package anyway?
-// search > uninformed > dls etc.
 
 import java.util.Stack;
 
+// later, compare IDS and DLS on codeDiff
+// if the only thing that changes is that IDS has levelBeingChecked, then add the levelBeingChecked argument to both adjsToFrontier and checkAdjToFrontier. Add a String argument (values IDS or DLS). If the value is IDS, execute extra code which changes level. If not, levelBeingChecked is always equal to limit.
+
 public class IDS {
 
-    static TNode tNodeBeingChecked;
-
-    Boolean isGoal = TNode.isGoal(tNodeBeingChecked);
+    static TNode tNodeBeingChecked = TSearch.tNodeBeingChecked;
+    static Stack<TNode> adjNodes = TSearch.adjNodes;
+    static TNode adjNode = TSearch.adjNode;
+    Boolean isGoal = TSearch.isGoal(tNodeBeingChecked);
     int tNodeDepth = 0;
-    static int level = 0;
+    static int levelBeingChecked = 0;
     static int limit = 5;
-    static BusRoutesTree busRoutesTree = new BusRoutesTree();
-    static TNode root = TNode.root;
-    static Stack<TNode> frontier = new Stack<TNode>();
+    static Stack<TNode> lifoFrontier = TSearch.lifoFrontier;
 
     // MAYBE USE THIS ONE IN IDS:
     
-//  public static void adjsToFrontierI(TNode tNodeBeingChecked, int levelBeingChecked, int limit) {
-//      System.out.println("\nIn adjsToFrontierDLS. levelBeingChecked: " + levelBeingChecked + ", limit: " + limit);
-//      System.out.println("Currently checking " + tNodeBeingChecked.place + tNodeBeingChecked.id + " [adjsToFrontierDLS]");
-//      adjNodes = TNode.getAdjNodes(tNodeBeingChecked);
-//      System.out.println(tNodeBeingChecked.place + " has " + adjNodes.size() + " adjNodes" + " [adjsToFrontierDLS]");
-//      for (int j = 0; j < adjNodes.size(); j++) {
-//   	   System.out.println("Changing tNodeBeingChecked to " + adjNodes.get(j).place + adjNodes.get(j).id + " [adjsToFrontierDLS]");
-//          tNodeBeingChecked = adjNodes.get(j);
-//          if (!lifoFrontier.contains(tNodeBeingChecked)) {
-//       	   System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " is not in frontier. Adding it to frontier [adjsToFrontierDLS]");
-//              lifoFrontier.add(tNodeBeingChecked);
-//          } else {
-//              System.out.println("lifoFrontier already contains " + tNodeBeingChecked.place + tNodeBeingChecked.id + " [adjsToFrontierDLS]");
-//          }
-//      }
-//      TSearch.displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
-//      System.out.println("[adjsToFrontierDLS]\n");
-//      checkAdjInFrontier(levelBeingChecked, limit);
-//  }
+  public static void adjsToFrontierIDS(TNode tNodeBeingChecked, int levelBeingChecked, int limit) {
+      System.out.println("\nIn adjsToFrontierIDS. levelBeingChecked: " + levelBeingChecked + ", limit: " + limit);
+      System.out.println("Currently checking " + tNodeBeingChecked.place + tNodeBeingChecked.id + " [adjsToFrontierIDS]");
+      adjNodes = TNode.getAdjNodes(tNodeBeingChecked);
+      System.out.println(tNodeBeingChecked.place + " has " + adjNodes.size() + " adjNodes" + " [adjsToFrontierDLS]");
+      for (int j = 0; j < adjNodes.size(); j++) {
+   	   System.out.println("Changing tNodeBeingChecked to " + adjNodes.get(j).place + adjNodes.get(j).id + " [adjsToFrontierIDS]");
+          tNodeBeingChecked = adjNodes.get(j);
+          if (!lifoFrontier.contains(tNodeBeingChecked)) {
+       	   System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " is not in frontier. Adding it to frontier [adjsToFrontierIDS]");
+              lifoFrontier.add(tNodeBeingChecked);
+          } else {
+              System.out.println("lifoFrontier already contains " + tNodeBeingChecked.place + tNodeBeingChecked.id + " [adjsToFrontierIDS]");
+          }
+      }
+      TSearch.displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
+      System.out.println("[adjsToFrontierDLS]\n");
+      checkAdjInFrontier(levelBeingChecked, limit);
+  }
   
 
 public static void main(String[] args) {
-    frontier.push(BusRoutesTree.root);
-    TNode.dls(root, level, limit);
-    for (int level = 0; level <= limit; level++){
-
-            if (TNode.dls(tNodeBeingChecked, level, limit)){
-                // 
-                System.out.println("Found a goal");
+    while (levelBeingChecked < (limit + 1) && (!TSearch.isGoal(tNodeBeingChecked))) {
+        System.out.println("\nIn ids while loop. TNodeBeingChecked: " + tNodeBeingChecked.place
+                + tNodeBeingChecked.id + "(depth " + tNodeBeingChecked.depth + ") , limit: " + limit + " [ids main]");
+        TSearch.displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
+        System.out.println("[IDS main]\n");
+        if (!TSearch.isGoal(tNodeBeingChecked)) {
+            if (!explored.contains(tNodeBeingChecked)) {
+                explored.add(tNodeBeingChecked);
+                System.out.println("TNodeBeingChecked is " + tNodeBeingChecked.place + tNodeBeingChecked.id
+                        + ". Checking its adjNodes" + " [IDS main]");
+                adjsToFrontierDLS(tNodeBeingChecked, limit);
             } else {
-                System.out.println("\nids: Didn't find a goal at level " + level + ". Time to increase level");;
-                if (level == limit) {
-                    System.out.println("Nah Limit reached. Goodbye");
-                }
+                System.out.println(
+                        "Explored already contains " + tNodeBeingChecked.place + tNodeBeingChecked.id + " [IDS main]");
+                adjsToFrontierDLS(tNodeBeingChecked, limit);
+                break;
             }
+        } else {
+            TSearch.showSolution();
+            break;
         }
-    }
+        tNodeBeingChecked = lifoFrontier.pop();
+    } // while
+
 
 }

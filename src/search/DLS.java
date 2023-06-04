@@ -42,8 +42,7 @@ public class DLS {
         checkAdjInFrontier(tNodeBeingChecked, limit);
     }
 
-    // check if they are a goal. return solution. If not, add each one to explored
-    // and add its children to lifoFrontier.
+    // check if they are a goal. return solution. If not, add each one to explored and add its children to lifoFrontier.
     public static void checkAdjInFrontier(TNode tNodeBeingChecked, int limit) {
         System.out.println("checkAdjInFrontier. limit: " + limit);
         TSearch.displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
@@ -81,7 +80,7 @@ public class DLS {
     }
 
     public static void main(String[] args) {
-        while (levelBeingChecked < (limit + 1) && (!TSearch.isGoal(tNodeBeingChecked))) {
+        while (!TSearch.isGoal(tNodeBeingChecked)) {
             System.out.println("\nIn dls while loop. TNodeBeingChecked: " + tNodeBeingChecked.place
                     + tNodeBeingChecked.id + "(depth " + tNodeBeingChecked.depth + ") , limit: " + limit + " [main]");
             TSearch.displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
