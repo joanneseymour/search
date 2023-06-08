@@ -27,6 +27,8 @@ public class TSearch {
         System.out.println("");
         if (tNodeBeingChecked != null) {
             System.out.println("tNodeBeingChecked: " + tNodeBeingChecked.place + tNodeBeingChecked.id);
+        } else {
+        	System.out.println("tNodeBeingChecked: None");
         }
         if (lifoFrontier.size() > 0) {
             System.out.print("lifoFrontier: ");
