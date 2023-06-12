@@ -4,20 +4,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 
-// never reaches xnhy3
-
-
-// only expands the adjNodes of the first child, not its siblings. Needs to expand child's rSib when it's done!!!
-
-// OH it looks like the work is repeated with every iteration. https://www.javatpoint.com/ai-uninformed-search-algorithms 
-// So the explored set is cleared each time the levelBeingChecked increases? YES
-
-
-// go to the next level when the frontier is empty? YES
-
-
-// later, compare IDS and DLS on codeDiff
-// if the only thing that changes is that IDS has levelBeingChecked, then add the levelBeingChecked argument to both adjsToFrontier and checkAdjToFrontier. Add a String argument (values IDS or DLS). If the value is IDS, execute extra code which changes level. If not, levelBeingChecked is always equal to limit.
+// use the new canAddToFrontier and canAddToExplored methods to simplify the code
 
 public class IDS {
 
@@ -27,7 +14,7 @@ public class IDS {
     Boolean isGoal = TSearch.isGoal(tNodeBeingChecked);
     int tNodeDepth = 0;
     static int levelBeingChecked = 0;
-    static int limit = 2;
+    static int limit = 3;
     static Stack<TNode> lifoFrontier = TSearch.lifoFrontier;
     static ArrayList<TNode> explored = TSearch.explored;
 
@@ -49,17 +36,18 @@ public class IDS {
         	  if (!lifoFrontier.contains(adjNode) && !explored.contains(adjNode)) {
        	   System.out.println("Adding adjNode " + adjNode.place + adjNode.id + "(depth: " + adjNode.depth + ") [adjsToFrontierIDS]");
                   lifoFrontier.add(adjNode);
-                	  if(!TSearch.isGoal(adjNode)) {
-                		  System.out.println(adjNode.place + adjNode.id + " is not goal.");
-                		  adjNode = null;
-                		  tNodeBeingChecked = lifoFrontier.pop();
-                    	  if (!explored.contains(tNodeBeingChecked)) {
-                		  explored.add(tNodeBeingChecked);
-                    	  }
+                  if (TSearch.canAddToExplored(tNodeBeingChecked, lifoFrontier, explored)) {
+            		  adjNode = null;
+            		  explored.add(tNodeBeingChecked);
+                  }
+        		  tNodeBeingChecked = lifoFrontier.pop();
                 		  System.out.println("tNodeBeingChecked = " + tNodeBeingChecked.place + tNodeBeingChecked.id);
                     	  adjsToFrontierIDS(tNodeBeingChecked, levelBeingChecked, limit);
                 	  } else {
-                		  System.out.println("Goal!");
+                		  System.out.println("AdjNode is Goal!");
+                		  tNodeBeingChecked = adjNode;
+                		  explored.add(tNodeBeingChecked);
+                		  break;
                 	  }
 
                   } else {
@@ -71,12 +59,17 @@ public class IDS {
               }
           }
 
-
+          if (!TSearch.isGoal(tNodeBeingChecked)) {
           //tNodeBeingChecked = null;
           TSearch.displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
-          System.out.println("[adjsToFrontierDLS]\n");
+          System.out.println("[adjsToFrontierDLS 80]\n");
 
-          checkAdjInFrontier(tNodeBeingChecked, levelBeingChecked, limit);
+        	  System.out.println("NOT GOAL, going to checkAdjInFrontier [adjsToFrontierDLS]");
+              checkAdjInFrontier(tNodeBeingChecked, levelBeingChecked, limit);
+          } else {
+        	  System.out.println("Goal found, well done [adjsToFrontierDLS]");
+          }
+
       } else {
     	  System.out.println("Limit reached.");
     	  if (!explored.contains(tNodeBeingChecked)) {

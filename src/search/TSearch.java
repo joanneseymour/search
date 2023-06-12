@@ -49,7 +49,51 @@ public class TSearch {
             System.out.print("Explored is empty");
         }
     }
-
+    
+    public static Boolean canAddToExplored(TNode tNodeBeingChecked, Stack<TNode> lifoFrontier, ArrayList<TNode> explored) {
+	    	if (!explored.contains(tNodeBeingChecked)) {
+	        	if (!isGoal(tNodeBeingChecked)) {
+	        		System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " is not goal [canAddToExplored]");
+	        		if (!lifoFrontier.contains(tNodeBeingChecked)) {
+	        			System.out.println("Not in frontier, can add " + tNodeBeingChecked.place + tNodeBeingChecked.id + " to explored [canAddToExplored]");
+	        			return true;
+	        		} else {
+	    	    		System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " already in frontier [canAddToExplored]");
+	    	    		return false;
+	        		}
+	        	} else {
+	        		System.out.println("GOAL!!!! Can add to explored  [canAddToExplored]");
+	        		return true;
+	        	}
+	    	} else {
+	    		System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " already in explored [canAddToExplored]");
+	    		return false;
+	    	}
+    }
+    
+    public static Boolean canAddToFrontier(TNode tNodeBeingChecked, Stack<TNode> lifoFrontier, ArrayList<TNode> explored) {
+    	if (!explored.contains(tNodeBeingChecked)) {
+        	if (!isGoal(tNodeBeingChecked)) {
+        		System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " is not goal [canAddToFrontier]");
+        		if (!lifoFrontier.contains(tNodeBeingChecked)) {
+        			System.out.println("Not in frontier, can add " + tNodeBeingChecked.place + tNodeBeingChecked.id + " to frontier [canAddToFrontier]");
+        			return true;
+        		} else {
+    	    		System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " already in frontier [canAddToFrontier]");
+    	    		return false;
+        		}
+        	} else {
+        		System.out.println("GOAL!!!! Cannot add to frontier  [canAddToFrontier]");
+        		return false;
+        	}
+    	} else {
+    		System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " already in explored [canAddToFrontier]");
+    		return false;
+    	}
+    	
+    	
+    }
+    
     public static void showSolution() {
         System.out.print("Solution: ");
         for (int e = 0; e < explored.size(); e++) {
