@@ -76,7 +76,7 @@ public class TSearch {
         	if (!isGoal(tNodeBeingChecked)) {
         		System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " is not goal [canAddToFrontier]");
         		if (!lifoFrontier.contains(tNodeBeingChecked)) {
-        			System.out.println("Not in frontier, can add " + tNodeBeingChecked.place + tNodeBeingChecked.id + " to frontier [canAddToFrontier]");
+        			System.out.println("Not in frontier or explored, can add " + tNodeBeingChecked.place + tNodeBeingChecked.id + " to frontier [canAddToFrontier]");
         			return true;
         		} else {
     	    		System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " already in frontier [canAddToFrontier]");
@@ -92,6 +92,15 @@ public class TSearch {
     	}
     	
     	
+    }
+    
+    public static Boolean isRightDepth(TNode tNodeBeingChecked, int levelBeingChecked) {
+    	if (tNodeBeingChecked.depth <= levelBeingChecked) {
+    		return true;
+    	} else {
+    		System.out.println("Depth beyond levelBeingChecked [isRightDepth]");
+    		return false;
+    	}
     }
     
     public static void showSolution() {
