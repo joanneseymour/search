@@ -52,9 +52,9 @@ public class TSearch {
     
     public static Boolean canAddToExplored(TNode tNodeBeingChecked, Stack<TNode> lifoFrontier, ArrayList<TNode> explored) {
 	    	if (!explored.contains(tNodeBeingChecked)) {
-        		System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " is not in explored [canAddToExplored]");
+        		//System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " is not in explored [canAddToExplored]");
 	        		if (!lifoFrontier.contains(tNodeBeingChecked)) {
-	        			System.out.println("Not in frontier, either, can add " + tNodeBeingChecked.place + tNodeBeingChecked.id + " to explored [canAddToExplored]");        			
+	        			//System.out.println("Not in frontier, either, can add " + tNodeBeingChecked.place + tNodeBeingChecked.id + " to explored [canAddToExplored]");        			
 	        			return true;
 	        		} else {
 	    	    		System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " already in frontier. Can't add to explored yet [canAddToExplored]");
@@ -72,9 +72,9 @@ public class TSearch {
     public static Boolean canAddToFrontier(TNode tNodeBeingChecked, Stack<TNode> lifoFrontier, ArrayList<TNode> explored) {
     	if (!explored.contains(tNodeBeingChecked)) {
         	if (!isGoal(tNodeBeingChecked)) {
-        		System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " is not goal [canAddToFrontier]");
+        		//System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " is not goal [canAddToFrontier]");
         		if (!lifoFrontier.contains(tNodeBeingChecked)) {
-        			System.out.println("Not in frontier or explored, can add " + tNodeBeingChecked.place + tNodeBeingChecked.id + " to frontier [canAddToFrontier]");
+        			//System.out.println("Not in frontier or explored, can add " + tNodeBeingChecked.place + tNodeBeingChecked.id + " to frontier [canAddToFrontier]");
         			return true;
         		} else {
     	    		System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " already in frontier [canAddToFrontier]");

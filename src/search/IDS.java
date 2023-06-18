@@ -22,24 +22,30 @@ public class IDS {
     
 public static void adjsToFrontierExploredIDS(TNode tNodeBeingChecked, int levelBeingChecked, int limit) {
  	System.out.println("*************************adjsToFrontier*******************************************");
+    System.out.println("adjsToFrontierExploredIDS. limit: " + limit + ", levelBeingChecked: " + levelBeingChecked);
     TSearch.displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
     System.out.println("[adjsToFrontierExploredIDS]\n");
  	
 		System.out.println("Expanding " + tNodeBeingChecked.place + tNodeBeingChecked.id + " [adjsToFrontierExploredIDS]");
 		adjNodes = TNode.getAdjNodes(tNodeBeingChecked);
 		System.out.println(tNodeBeingChecked.place + " has " + adjNodes.size() + " adjNodes" + " [adjsToFrontierDLS]\n");
+		
 		for (int j = 0; j < adjNodes.size(); j++) {
 			adjNode = adjNodes.get(j);
-	          if ((TSearch.isRightDepth(adjNode, levelBeingChecked)) && (TSearch.canAddToExplored(tNodeBeingChecked, lifoFrontier, explored)) && (!TSearch.isGoal(tNodeBeingChecked))) { 
-				System.out.println("Adding adjNode " + adjNode.place + adjNode.id + "(depth: " + adjNode.depth + ") [adjsToFrontierExploredIDS]");
+	          if ((TSearch.isRightDepth(adjNode, levelBeingChecked)) && (TSearch.canAddToExplored(adjNode, lifoFrontier, explored)) && (!TSearch.isGoal(adjNode))) { 
+				System.out.println("Adding adjNode " + adjNode.place + adjNode.id + "(depth: " + adjNode.depth + ") [adjsToFrontierExploredIDS]\n");
 				lifoFrontier.add(adjNode);
-    			if (tNodeBeingChecked!= TSearch.tNodeBeingChecked) {
-    				explored.add(tNodeBeingChecked);
-            	} else {
-            		System.out.println("Cannot add root to explored [canAddToExplored]");
-            	}
-
-				adjNode = null; // clear value of adjNode so adjNode can be used again later
+//    			if (tNodeBeingChecked!= TSearch.tNodeBeingChecked) {
+//    				explored.add(tNodeBeingChecked);
+//            	} else {
+//            		System.out.println("Cannot add root to explored [canAddToExplored]");
+//            	}
+			if ((TSearch.isRightDepth(adjNode, levelBeingChecked)) && (TSearch.canAddToExplored(adjNode, lifoFrontier, explored)) && (TSearch.canAddToFrontier(adjNode, lifoFrontier, explored)) && (!TSearch.isGoal(adjNode))) {
+			
+					System.out.println("Recursing (adjToFrontier");
+				adjsToFrontierExploredIDS(adjNode, levelBeingChecked, limit);
+				}
+				 // clear value of adjNode so adjNode can be used again later
 				//tNodeBeingChecked = lifoFrontier.pop();	
 	          }
 
@@ -73,20 +79,31 @@ public static void adjsToFrontierExploredIDS(TNode tNodeBeingChecked, int levelB
                   + tNodeBeingChecked.depth + " [checkAdjInFrontier]");     
           if ((TSearch.isRightDepth(tNodeBeingChecked, levelBeingChecked)) && (TSearch.canAddToExplored(tNodeBeingChecked, lifoFrontier, explored)) && (!TSearch.isGoal(tNodeBeingChecked))) {        
                   explored.add(tNodeBeingChecked);
-	    	  if (TNode.getRSib(tNodeBeingChecked)!=null) { // if there's a rSib
-	    		  tNodeBeingChecked = TNode.getRSib(tNodeBeingChecked);
-	    		  lifoFrontier.add(tNodeBeingChecked);
-	    		  System.out.println("tNodeBeingChecked is now " + tNodeBeingChecked.place + tNodeBeingChecked.id );
-	    		  adjsToFrontierExploredIDS(tNodeBeingChecked, levelBeingChecked, limit); // expand rSib to frontier    	  
-	    	  } // if there's a rSib
-	    	  System.out.println("There's no rSib for " + tNodeBeingChecked.place + tNodeBeingChecked.id + " [checkAdjInFrontier]");
-          TSearch.displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
-          System.out.println("[checkAdjInFrontier]\n");
-    	  //explored.clear();
-    	  tNodeBeingChecked = TSearch.tNodeBeingChecked;
-    	  System.out.println("Changing levelBeingChecked to 0 and tNodeBeingChecked to root");
-    	  levelBeingChecked = 0;
-    	ids(tNodeBeingChecked, levelBeingChecked, limit);      
+                  
+                  
+                  // this might be redundant because the rightmost sib is at the end of the frontier anyway
+                  
+//	    	  if (TNode.getRSib(tNodeBeingChecked)!=null) { // if there's a rSib
+//	    		  if (!explored.contains(TNode.getRSib(tNodeBeingChecked))) {	    			  
+//		    		  lifoFrontier.add(TNode.getRSib(tNodeBeingChecked));
+//		    		  System.out.println("tNodeBeingChecked is now " + tNodeBeingChecked.place + tNodeBeingChecked.id );
+//		    		  adjsToFrontierExploredIDS(tNodeBeingChecked, levelBeingChecked, limit); // expand rSib to frontier    
+//	    		  }  
+//	    	  } // if there's a rSib
+//	    	  System.out.println("There's no rSib for " + tNodeBeingChecked.place + tNodeBeingChecked.id + " [checkAdjInFrontier]");
+	    	  
+	    	if (lifoFrontier.size() == 0) {
+	            TSearch.displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
+	            System.out.println("[checkAdjInFrontier]\n");
+	      	  explored.clear();
+	      	  tNodeBeingChecked = TSearch.tNodeBeingChecked;
+//	      	  System.out.println("Changing levelBeingChecked to 0 and tNodeBeingChecked to root");
+//	      	  levelBeingChecked = 0;
+	      	  System.out.println("Adding 1 to levelBeingChecked and changing tNodeBeingChecked to root");
+	      	  levelBeingChecked = levelBeingChecked + 1;
+	      	ids(tNodeBeingChecked, levelBeingChecked, limit); 
+	    	}
+     
       } // if isRightDepth & canAddExplored & !isGoal
       } // while frontier > 0 & level <=limit
   }
@@ -106,7 +123,10 @@ public static void ids(TNode tNodeBeingChecked, int levelBeingChecked, int limit
                 System.out.println("TNodeBeingChecked is " + tNodeBeingChecked.place + tNodeBeingChecked.id
                         + ". Expanding its adjNodes to frontier" + " [IDS]");
                 levelBeingChecked = levelBeingChecked + 1;
-                adjsToFrontierExploredIDS(tNodeBeingChecked, levelBeingChecked, limit);
+                if (levelBeingChecked <= limit) {
+                    adjsToFrontierExploredIDS(tNodeBeingChecked, levelBeingChecked, limit);              
+                }
+
                 //break;
             }
         } else {
