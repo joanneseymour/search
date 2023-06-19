@@ -96,7 +96,7 @@ public class TSearch {
     	if (tNodeBeingChecked.depth <= levelBeingChecked) {
     		return true;
     	} else {
-    		System.out.println("Depth beyond levelBeingChecked [isRightDepth]");
+    		System.out.println(tNodeBeingChecked.place + tNodeBeingChecked.id + " depth beyond levelBeingChecked [isRightDepth]");
     		return false;
     	}
     }
