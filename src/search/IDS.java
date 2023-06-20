@@ -35,33 +35,25 @@ public static void adjsToFrontierExploredIDS(TNode tNodeBeingChecked, int levelB
 	          if ((TSearch.isRightDepth(adjNode, levelBeingChecked)) && (!TSearch.isGoal(adjNode))) { 
 				System.out.println("Adding adjNode " + adjNode.place + adjNode.id + "(depth: " + adjNode.depth + ") [adjsToFrontierExploredIDS]\n");
 				lifoFrontier.add(adjNode);
-//    			if (tNodeBeingChecked!= TSearch.tNodeBeingChecked) {
-//    				explored.add(tNodeBeingChecked);
-//            	} else {
-//            		System.out.println("Cannot add root to explored [canAddToExplored]");
-//            	}
-//			if ((TSearch.isRightDepth(adjNode, levelBeingChecked)) && (TSearch.canAddToExplored(adjNode, lifoFrontier, explored)) && (TSearch.canAddToFrontier(adjNode, lifoFrontier, explored)) && (!TSearch.isGoal(adjNode))) {
-			
-					System.out.println("Recursing (adjToFrontier");
+				System.out.println("Recursing (adjToFrontier");
 				adjsToFrontierExploredIDS(adjNode, levelBeingChecked, limit);
-//				}
-				 // clear value of adjNode so adjNode can be used again later
-				//tNodeBeingChecked = lifoFrontier.pop();	
+	          } else if (!TSearch.isRightDepth(adjNode, levelBeingChecked)) {
+	        	  if(TSearch.canAddToExplored(adjNode, lifoFrontier, explored)) {
+	        		  explored.add(adjNode);
+	        	  }
+	        	  System.out.println("Expanding rSib of parent");
+	        	  if(tNodeBeingChecked.rSib != null) {
+	        		  tNodeBeingChecked = tNodeBeingChecked.rSib;
+	        		  adjsToFrontierExploredIDS(tNodeBeingChecked, levelBeingChecked, limit);
+	        	  }
 	          }
-
-			    
-					//adjsToFrontierExploredIDS(tNodeBeingChecked, levelBeingChecked, limit);
-				//System.out.println("Moving on to checkAdjInFrontier [adjsToFrontierExploredIDS]");
-				//checkAdjInFrontier(tNodeBeingChecked, levelBeingChecked, limit);
 			} // for all adjNodes
-		//tNodeBeingChecked = TSearch.tNodeBeingChecked; // reset tNode to root
+
 		
 	    TSearch.displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
 	    System.out.println("[adjsToFrontierExploredIDS]\n");
 	    
-//		checkAdjInFrontier(tNodeBeingChecked, levelBeingChecked, limit);
-        //levelBeingChecked = levelBeingChecked + 1;
-		//ids(tNodeBeingChecked, levelBeingChecked, limit);	
+
 }
 
 
