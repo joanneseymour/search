@@ -38,11 +38,14 @@ public static void adjsToFrontierExploredIDS(TNode tNodeBeingChecked, int levelB
 				System.out.println("Recursing (adjToFrontier");
 				adjsToFrontierExploredIDS(adjNode, levelBeingChecked, limit);
 	          } else if (!TSearch.isRightDepth(adjNode, levelBeingChecked)) {
-	        	  if(TSearch.canAddToExplored(adjNode, lifoFrontier, explored)) {
-	        		  explored.add(adjNode);
+	        	  if(TSearch.canAddToExplored(tNodeBeingChecked, lifoFrontier, explored)) {
+		        	  System.out.println("Adding " + tNodeBeingChecked.place + tNodeBeingChecked.id + " to explored [adjsToFrontierDLS]");
+	        		  explored.add(tNodeBeingChecked);
 	        	  }
+
 	        	  System.out.println("Expanding rSib of parent");
 	        	  if(tNodeBeingChecked.rSib != null) {
+	        		  
 	        		  tNodeBeingChecked = tNodeBeingChecked.rSib;
 	        		  adjsToFrontierExploredIDS(tNodeBeingChecked, levelBeingChecked, limit);
 	        	  }
@@ -71,26 +74,13 @@ public static void adjsToFrontierExploredIDS(TNode tNodeBeingChecked, int levelB
                   + tNodeBeingChecked.depth + " [checkAdjInFrontier]");     
           if ((TSearch.isRightDepth(tNodeBeingChecked, levelBeingChecked)) && (TSearch.canAddToExplored(tNodeBeingChecked, lifoFrontier, explored)) && (!TSearch.isGoal(tNodeBeingChecked))) {        
                   explored.add(tNodeBeingChecked);
-                  
-                  
-                  // this might be redundant because the rightmost sib is at the end of the frontier anyway
-                  
-//	    	  if (TNode.getRSib(tNodeBeingChecked)!=null) { // if there's a rSib
-//	    		  if (!explored.contains(TNode.getRSib(tNodeBeingChecked))) {	    			  
-//		    		  lifoFrontier.add(TNode.getRSib(tNodeBeingChecked));
-//		    		  System.out.println("tNodeBeingChecked is now " + tNodeBeingChecked.place + tNodeBeingChecked.id );
-//		    		  adjsToFrontierExploredIDS(tNodeBeingChecked, levelBeingChecked, limit); // expand rSib to frontier    
-//	    		  }  
-//	    	  } // if there's a rSib
-//	    	  System.out.println("There's no rSib for " + tNodeBeingChecked.place + tNodeBeingChecked.id + " [checkAdjInFrontier]");
-	    	  
+              	    	  
 	    	if (lifoFrontier.size() == 0) {
 	            TSearch.displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
 	            System.out.println("[checkAdjInFrontier]\n");
-	      	  //explored.clear();
+
 	      	  tNodeBeingChecked = TSearch.tNodeBeingChecked;
-//	      	  System.out.println("Changing levelBeingChecked to 0 and tNodeBeingChecked to root");
-//	      	  levelBeingChecked = 0;
+
 	      	  System.out.println("Adding 1 to levelBeingChecked and changing tNodeBeingChecked to root");
 	      	  levelBeingChecked = levelBeingChecked + 1;
 	      	ids(tNodeBeingChecked, levelBeingChecked, limit); 
@@ -111,7 +101,7 @@ public static void ids(TNode tNodeBeingChecked, int levelBeingChecked, int limit
         TSearch.displayFrontierExplored(tNodeBeingChecked, lifoFrontier, explored);
         System.out.println("[IDS]\n");
         if (!TSearch.isGoal(tNodeBeingChecked)) {
-            if ((TSearch.canAddToExplored(tNodeBeingChecked, lifoFrontier, explored)) && (TSearch.canAddToFrontier(tNodeBeingChecked, lifoFrontier, explored))) {
+
                 System.out.println("TNodeBeingChecked is " + tNodeBeingChecked.place + tNodeBeingChecked.id
                         + ". Expanding its adjNodes to frontier" + " [IDS]");
                 levelBeingChecked = levelBeingChecked + 1;
@@ -120,7 +110,7 @@ public static void ids(TNode tNodeBeingChecked, int levelBeingChecked, int limit
                 }
         		checkAdjInFrontier(tNodeBeingChecked, levelBeingChecked, limit);
                 //break;
-            }
+
         } else {
         	System.out.println("GOAL [IDS]");
             TSearch.showSolution();
