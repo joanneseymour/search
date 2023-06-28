@@ -14,7 +14,7 @@ public class IDS {
     Boolean isGoal = TSearch.isGoal(tNodeBeingChecked);
     int tNodeDepth = 0;
     static int levelBeingChecked = 0;
-    static int limit = 3;
+    static int limit = 5;
     static Stack<TNode> lifoFrontier = TSearch.lifoFrontier;
     static ArrayList<TNode> explored = TSearch.explored;
 

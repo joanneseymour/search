@@ -15,7 +15,8 @@ public class TSearch {
     static TNode adjNode;
 
     public static Boolean isGoal(TNode tNodeBeingChecked) {
-        if ((tNodeBeingChecked.place.length() > 3) && (tNodeBeingChecked.place.substring(0, 4) == "work")) {
+//        if ((tNodeBeingChecked.place.length() > 3) && (tNodeBeingChecked.place.substring(0, 4) == "work")) {
+    	if ((tNodeBeingChecked.place.startsWith("work"))) {
             return true;
         } else {
             return false;
